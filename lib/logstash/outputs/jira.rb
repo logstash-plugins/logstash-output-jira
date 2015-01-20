@@ -19,7 +19,6 @@ require "logstash/namespace"
 
 class LogStash::Outputs::Jira < LogStash::Outputs::Base
   config_name "jira"
-  milestone 2
 
   # The hostname to send logs to. This should target your JIRA server 
   # and has to have the REST interface enabled
