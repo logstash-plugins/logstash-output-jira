@@ -88,9 +88,13 @@ class LogStash::Outputs::Jira < LogStash::Outputs::Base
     end
 
 
+    # Limit issue summary to 255 characters
+    summary = event.sprintf(@summary)
+    summary = "#{summary[0,252]}..." if summary.length > 255
+
 issue = Jiralicious::Issue.new
     issue.fields.set_id("project", @projectid) # would have prefered a project key, https://github.com/jstewart/jiralicious/issues/16
-    issue.fields.set("summary", event.sprintf(@summary))
+    issue.fields.set("summary", summary)
     issue.fields.set("description", event.sprintf(event.to_hash.to_yaml))
     issue.fields.set_id("issuetype", @issuetypeid)
     issue.fields.set_name("reporter", @reporter) if not @reporter.nil?
