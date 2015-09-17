@@ -118,10 +118,7 @@ class LogStash::Outputs::Jira < LogStash::Outputs::Base
   def receive(event)
     return unless output?(event)
 
-    if event == LogStash::SHUTDOWN
-      finished
-      return
-    end
+    return if event == LogStash::SHUTDOWN
 
     Jiralicious.configure do |config|
       config.username = @username
@@ -131,12 +128,11 @@ class LogStash::Outputs::Jira < LogStash::Outputs::Base
       config.api_version = "latest"
     end
 
-
     # Limit issue summary to 255 characters
     summary = event.sprintf(@summary)
     summary = "#{summary[0,252]}..." if summary.length > 255
 
-issue = Jiralicious::Issue.new
+    issue = Jiralicious::Issue.new
     issue.fields.set_id("project", @projectid) # would have prefered a project key, https://github.com/jstewart/jiralicious/issues/16
     issue.fields.set("summary", summary)
     issue.fields.set("description", event.sprintf(event.to_hash.to_yaml))
@@ -144,15 +140,6 @@ issue = Jiralicious::Issue.new
     issue.fields.set_name("reporter", @reporter) if @reporter
     issue.fields.set_name("assignee", @assignee) if @assignee
     issue.fields.set_id("priority", @priority)
-#puts issue.fields.to_yaml
     issue.save
-
-
-
-#    if response.is_a?(Net::HTTPSuccess)
-#      @logger.info("Event send to JIRA OK!")
-#    else
-#      @logger.warn("HTTP error", :error => response.error!)
-#    end
   end # def receive
 end # class LogStash::Outputs::Jira
