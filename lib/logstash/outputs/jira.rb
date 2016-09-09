@@ -116,8 +116,6 @@ class LogStash::Outputs::Jira < LogStash::Outputs::Base
 
   public
   def receive(event)
-    
-
     return if event == LogStash::SHUTDOWN
 
     Jiralicious.configure do |config|
