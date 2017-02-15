@@ -1,3 +1,6 @@
+## 3.0.1
+  - Docs: Fix doc generation issue by adding example formatting
+  
 ## 3.0.0
   - update plugin to the new api
   - update travis.yml

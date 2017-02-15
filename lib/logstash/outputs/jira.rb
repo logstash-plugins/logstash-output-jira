@@ -10,6 +10,8 @@ require "logstash/namespace"
 #
 # Example JSON-encoded event:
 #
+# [source,yaml]
+# -----------------------------------------------------------------------------
 #     {
 #       "message": "Hello JIRA!",
 #       "@version": "1",
@@ -25,9 +27,12 @@ require "logstash/namespace"
 #       "syslog_facility": "user-level",
 #       "syslog_severity": "error"
 #     }
+# -----------------------------------------------------------------------------
 #
 # Example JIRA issue created the event above:
 #
+# [source,shell]
+# -----------------------------------------------------------------------------
 #     Type:        Task
 #     Priority:    2 - Major
 #     Status:      TO DO
@@ -48,6 +53,7 @@ require "logstash/namespace"
 #         syslog_facility_code: 1
 #         syslog_facility: user-level
 #         syslog_severity: error
+# -----------------------------------------------------------------------------
 #
 # To use this output you'll need to ensure that your JIRA instance allows REST calls.
 #
@@ -58,12 +64,12 @@ require "logstash/namespace"
 # Origin <https://groups.google.com/forum/#!msg/logstash-users/exgrB4iQ-mw/R34apku5nXsJ>
 # and <https://botbot.me/freenode/logstash/msg/4169496/>
 # via <https://gist.github.com/electrical/4660061e8fff11cdcf37#file-jira-rb>.
-
+#
 class LogStash::Outputs::Jira < LogStash::Outputs::Base
   config_name "jira"
 
   # The hostname to send logs to. This should target your JIRA server 
-  # and has to have the REST interface enabled
+  # and has to have the REST interface enabled.
   config :host, :validate => :string
 
   config :username, :validate => :string, :required => true
