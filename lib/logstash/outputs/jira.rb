@@ -73,7 +73,7 @@ class LogStash::Outputs::Jira < LogStash::Outputs::Base
   config :host, :validate => :string
 
   config :username, :validate => :string, :required => true
-  config :password, :validate => :string, :required => true
+  config :password, :validate => :password, :required => true
 
   # Javalicious has no proxy support
 ###
@@ -126,7 +126,7 @@ class LogStash::Outputs::Jira < LogStash::Outputs::Base
 
     Jiralicious.configure do |config|
       config.username = @username
-      config.password = @password
+      config.password = @password.value
       config.uri = @host
       config.auth_type = :basic
       config.api_version = "latest"

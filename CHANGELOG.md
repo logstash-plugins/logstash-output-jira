@@ -1,3 +1,6 @@
+## 3.0.5
+  - Prevent `password` leakage in the debug logs [#10](https://github.com/logstash-plugins/logstash-output-jira/pull/10)
+
 ## 3.0.4
   - Docs: Set the default_codec doc attribute.
 
